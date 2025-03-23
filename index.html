@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>摸鱼急救包</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px; padding: 15px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>摸鱼急救包 🐟</h1>
+    
+    <!-- 小游戏区 -->
+    <div class="section">
+        <h2>经典游戏</h2>
+        <iframe src="https://tetris.com/play-tetris" width="600" height="400"></iframe>
+    </div>
+
+    <!-- 热点区 -->
+    <div class="section">
+        <h2>今日热点</h2>
+        <div id="hot-news"></div>
+    </div>
+
+    <!-- 音乐区 -->
+    <div class="section">
+        <h2>白噪音</h2>
+        <audio controls>
+            <source src="https://actions.google.com/sounds/v1/ambiences/rain.ogg" type="audio/ogg">
+        </audio>
+    </div>
+
+    <!-- 生成器 -->
+    <div class="section">
+        <h2>彩虹屁生成器</h2>
+        <button onclick="generatePraise()">点击获取</button>
+        <p id="output"></p>
+    </div>
+
+    <script>
+        // 静态热点数据
+        const hotNews = [
+            "1. 微博：公司年会奖品竟是加班券",
+            "2. 知乎：如何优雅地拒绝团建？",
+            "3. B站：摸鱼达人桌面手办走红"
+        ];
+        document.getElementById("hot-news").innerHTML = hotNews.join("<br>");
+
+        // 彩虹屁生成器
+        const praises = ["您今天的发型散发着智慧的光芒", "这个方案只有您这样的天才想得出", "您的存在让办公室蓬荜生辉"];
+        function generatePraise() {
+            document.getElementById("output").innerHTML = praises[Math.floor(Math.random()*3)];
+        }
+    </script>
+</body>
+</html>
