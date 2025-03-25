@@ -1,60 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>摸鱼急救包</title>
+    <title>随机摸鱼神器</title>
     <style>
-        body { font-family: Arial; max-width: 800px; margin: 0 auto; }
-        .section { margin: 20px; padding: 15px; border: 1px solid #ddd; }
+        body { font-family: Arial; max-width: 800px; margin: 20px auto; }
+        .content-box { 
+            border: 2px dashed #4CAF50; 
+            padding: 20px; 
+            min-height: 400px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>摸鱼急救包 🐟</h1>
-    
-    <!-- 小游戏区 -->
-    <div class="section">
-        <h2>经典游戏</h2>
-        <iframe src="https://poki.com/embed/fruit-ninja" 
-        width="600" height="400" 
-        frameborder="0" 
-        allowfullscreen>
-</iframe>
-    </div>
-
-    <!-- 热点区 -->
-    <div class="section">
-        <h2>今日热点</h2>
-        <div id="hot-news"></div>
-    </div>
-
-    <!-- 音乐区 -->
-    <div class="section">
-        <h2>白噪音</h2>
-        <audio controls>
-            <source src="https://actions.google.com/sounds/v1/ambiences/rain.ogg" type="audio/ogg">
-        </audio>
-    </div>
-
-    <!-- 生成器 -->
-    <div class="section">
-        <h2>彩虹屁生成器</h2>
-        <button onclick="generatePraise()">点击获取</button>
-        <p id="output"></p>
-    </div>
+    <h1>🎣 今日摸鱼补给包（随机版）</h1>
+    <div class="content-box" id="main-content"></div>
 
     <script>
-        // 静态热点数据
-        const hotNews = [
-            "1. 微博：公司年会奖品竟是加班券",
-            "2. 知乎：如何优雅地拒绝团建？",
-            "3. B站：摸鱼达人桌面手办走红"
-        ];
-        document.getElementById("hot-news").innerHTML = hotNews.join("<br>");
+        // 定义随机内容池
+        const contentPool = {
+            // 游戏类：嵌入第三方游戏
+            games: [
+                '<iframe src="https://poki.com/embed/fruit-ninja" width="600" height="400"></iframe>',
+                '<iframe src="https://poki.com/embed/bubble-shooter" width="600" height="400"></iframe>'
+            ],
+            
+            // 段子类：文字+表情
+            jokes: [
+                '🤣 老板说"下班别走，开个短会" —— 结果讲了3小时《我当年的奋斗史》',
+                '🐟 同事的键盘声比他的工作效率高10倍',
+                '☕ 公司咖啡机的使用频率是饮水机的8.7倍'
+            ],
+            
+            // 音频类：白噪音
+            audios: [
+                '<h3>🌧️ 雨声白噪音</h3><audio controls src="https://actions.google.com/sounds/v1/ambiences/rain.ogg"></audio>',
+                '<h3>🔥 篝火白噪音</h3><audio controls src="https://actions.google.com/sounds/v1/ambiences/campfire.ogg"></audio>'
+            ],
+            
+            // 生成器类
+            generators: [
+                {
+                    html: '<button onclick="generateFunny()">生成职场黑话</button><p id="output"></p>',
+                    script: `
+                        const phrases = [
+                            "闭环式长效赋能", 
+                            "颗粒度对齐迭代路径", 
+                            "组合拳打法升级认知"
+                        ];
+                        function generateFunny() {
+                            document.getElementById("output").innerHTML = 
+                                phrases[Math.floor(Math.random()*3)] + " 🚀";
+                        }
+                    `
+                }
+            ]
+        };
 
-        // 彩虹屁生成器
-        const praises = ["您今天的发型散发着智慧的光芒", "这个方案只有您这样的天才想得出", "您的存在让办公室蓬荜生辉"];
-        function generatePraise() {
-            document.getElementById("output").innerHTML = praises[Math.floor(Math.random()*3)];
+        // 随机选择内容类型
+        function loadRandomContent() {
+            const container = document.getElementById('main-content');
+            const types = Object.keys(contentPool);
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            
+            // 清空容器
+            container.innerHTML = '';
+            
+            // 根据类型加载内容
+            switch(randomType) {
+                case 'games':
+                    const game = contentPool.games[Math.floor(Math.random() * contentPool.games.length)];
+                    container.innerHTML = game;
+                    break;
+                    
+                case 'jokes':
+                    const joke = contentPool.jokes[Math.floor(Math.random() * contentPool.jokes.length)];
+                    container.innerHTML = `<h2>今日段子</h2><p style="font-size:1.5em">${joke}</p>`;
+                    break;
+                    
+                case 'audios':
+                    const audio = contentPool.audios[Math.floor(Math.random() * contentPool.audios.length)];
+                    container.innerHTML = audio;
+                    break;
+                    
+                case 'generators':
+                    const generator = contentPool.generators[Math.floor(Math.random() * contentPool.generators.length)];
+                    container.innerHTML = generator.html;
+                    const scriptEl = document.createElement('script');
+                    scriptEl.textContent = generator.script;
+                    document.body.appendChild(scriptEl);
+                    break;
+            }
         }
+
+        // 页面加载时执行 & 绑定刷新按钮
+        window.onload = loadRandomContent;
     </script>
 </body>
 </html>
